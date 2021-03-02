@@ -8,8 +8,9 @@
 		</header>
 
 		<MediaOptions class="mb-4"/>
-		<Spinner v-if="state.loading == true"/>
+	
 		<ListPosts/>
+		<Spinner v-if="state.loading == true"/>
 		<NextButton class="mb-4" v-if="state.posts.length"/>
 	</div>
 </template>
