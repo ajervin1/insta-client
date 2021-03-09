@@ -10,7 +10,9 @@ const store = new Vuex.Store({
 		end_cursor: null,
 		media_type: 'image',
 		username: '',
-		loading: false
+		loading: false,
+		user: null,
+		cartId: '7YVo3dqiVPuPqNn7REIB'
 	},
 	mutations: {
 		// Get User Posts
@@ -44,6 +46,15 @@ const store = new Vuex.Store({
 			await store.commit('searchUser')
 		},
 		
+	},
+	getters: {
+		loggedIn (state) {
+			if (state.user) {
+				return true
+			} else {
+				return false
+			}
+		}
 	}
 })
 

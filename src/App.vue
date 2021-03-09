@@ -1,49 +1,34 @@
 <template>
-	<div id="app"  class="w-75 mx-auto">
-		<header class="flex align-items-center justify-content-between mb-4">
-			
-				<h2 class="font-light m-0">InstaScraper</h2>
-				<SearchForm />
-		
-		</header>
-
-		<MediaOptions class="mb-4"/>
+	<div id="app" class="w-75 mx-auto">
 	
-		<ListPosts/>
-		<Spinner v-if="state.loading == true"/>
-		<NextButton class="mb-4" v-if="state.posts.length"/>
+		<router-view></router-view>
 	</div>
 </template>
 
 <script>
 	
 	
-	import SearchForm from './components/SearchForm'
-	import ListPosts from './components/ListPosts'
-	import MediaOptions from './components/MediaOptions'
-	import NextButton from './components/NextButton'
-	import Spinner from './components/Spinner'
+	import { auth } from './db'
 	
 	export default {
 		name: 'App',
-		components: { Spinner, NextButton, MediaOptions, ListPosts, SearchForm },
-		data () {
-			return {
-				
-				scrolledToBottom: false,
-				busy: false,
-			}
-		},
-		methods: {
 		
-		},
+		methods: {},
 		computed: {
 			state () {
 				return this.$store.state
 			}
 		},
 		mounted () {
-		
+			auth.onAuthStateChanged(user => {
+				if (user) {
+					const { uid, email, } = user
+					const new_user = { userId: uid, email }
+					this.$store.state.user = new_user
+				} else {
+					this.$store.state.user = null
+				}
+			})
 		}
 		
 	}
